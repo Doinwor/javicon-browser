@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Загрузить - Javicon Browser</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="container">
+
+  <div id="header">
+    <img src="img/logo.png" alt="Javicon logo" width="120" height="120">
+    <h1>JAVICON BROWSER - ЗАГРУЗКА</h1>
+  </div>
+
+  <div id="nav">
+    <a href="index.html">Главная</a>
+    <b>[ Загрузить ]</b>
+    <a href="features.html">Возможности</a>
+    <a href="screenshots.html">Скриншоты</a>
+    <a href="about.html">О проекте</a>
+  </div>
+
+  <div class="hero">
+    <h2>Скачать Javicon Browser</h2>
+    <img src="img/banner.png" alt="Javicon Banner" style="max-width:100%;">
+    <div id="latest-release"><i>Загрузка последней версии...</i></div>
+  </div>
+
+  <h2>&#8681; Все версии (архив релизов)</h2>
+  <p id="releases-status"><i>Загружается список релизов с GitHub...</i></p>
+
+  <table id="releases-table">
+    <thead>
+      <tr>
+        <th>Версия</th>
+        <th>Файл</th>
+        <th>Размер</th>
+        <th>Платформа</th>
+        <th>Загрузить</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td colspan="5"><i>...</i></td></tr>
+    </tbody>
+  </table>
+
+  <p><b>Примечание:</b> каждый новый релиз автоматически появляется в таблице выше,
+  а «Последняя версия» всегда указывает на самый свежий выпуск.</p>
+
+  <hr class="silver">
+
+  <h2>Что нужно для установки</h2>
+  <h3>Windows</h3>
+  <ol>
+    <li>Скачайте <code>Javicon Browser - JAR</code> (для любой версии) <b>или</b> EXE-сборку (Windows).</li>
+    <li>Для JAR убедитесь, что установлена Java 17+ (<code>java -version</code>).</li>
+    <li>Запустите: <code>java -jar JaviconBrowser-&lt;версия&gt;.jar</code></li>
+    <li>Для EXE — просто запустите <code>JaviconBrowser.exe</code> (Java уже внутри).</li>
+  </ol>
+
+  <h3>Linux / macOS</h3>
+  <ol>
+    <li>Скачайте <code>jar</code>-файл соответствующей версии.</li>
+    <li>Выполните: <code>java -jar javicon-browser.jar</code></li>
+    <li>Либо соберите из исходного кода: <code>mvn clean package</code></li>
+  </ol>
+
+  <hr class="silver">
+
+  <h2>Исходный код и полный архив</h2>
+  <p>Все релизы, сурсы и история версий на GitHub:</p>
+  <p><a class="button" href="https://github.com/Doinwor/javicon-browser/releases" target="_blank">[ GitHub — все релизы ]</a></p>
+
+  <div id="footer">
+    <center>
+      <blink>&#9733;</blink> &nbsp; Javicon Browser - 1998-2026 &nbsp; <blink>&#9733;</blink>
+      <br>
+      &copy; 2026 Javicon Project. Все права защищены.
+    </center>
+  </div>
+
+</div>
+
+<script src="js/releases.js"></script>
+
+</body>
+</html>
