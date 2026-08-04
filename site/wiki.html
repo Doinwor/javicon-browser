@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Вики - Javicon Browser - энциклопедия проекта</title>
+<meta name="description" content="Javicon Browser — лёгкий ретро-браузер на Java. Вики-статья: история, возможности, технические детали, установка, версии. Ссылки на сайт и GitHub.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="container">
+
+  <div id="header">
+    <img src="img/logo.png" alt="Javicon logo" width="120" height="120">
+    <h1>JAVICON BROWSER - ВИКИ</h1>
+    <div class="marquee">&gt;&gt;&gt; Открытая энциклопедия проекта: история, технологии, установка, версии &lt;&lt;&lt;</div>
+  </div>
+
+  <div id="nav">
+    <a href="index.html">Главная</a>
+    <a href="download.html">Загрузить</a>
+    <a href="features.html">Возможности</a>
+    <a href="screenshots.html">Скриншоты</a>
+    <a href="about.html">О проекте</a>
+    <b>[ Вики ]</b>
+  </div>
+
+  <div class="hero">
+    <h2>Энциклопедия Javicon Browser</h2>
+    <p>Полная информация о проекте в открытом доступе. Полная версия статьи также
+    размещена в <a href="https://github.com/Doinwor/javicon-browser/wiki" target="_blank">GitHub Wiki</a>.</p>
+  </div>
+
+  <div id="wiki">
+
+    <h2>Что такое Javicon Browser?</h2>
+    <p><b>Javicon Browser</b> — лёгкий веб-браузер на языке Java, стилизованный под интернет-браузеры 1990-х годов
+    (Netscape Navigator, Internet Explorer 5/6). Внутри использует современный движок
+    <b>JavaFX WebView</b> на основе Chromium, поэтому поддерживает HTML5, CSS3 и ES6.</p>
+
+    <h2>Название</h2>
+    <p>Название «Javicon» образовано от двух слов: <i>Java</i> (язык программирования, на котором написан браузер)
+    и <i>icon</i> (икона, образ). Вместе — «Java-икона», символ ретро-браузера, созданного на Java.</p>
+
+    <h2>Описание</h2>
+    <p>Javicon Browser сочетает классический визуальный стиль середины 90-х с современным внутренним движком.
+    Пользователь видит серые панели инструментов, рельефные кнопки, статус-бар «Готово» и шрифт Tahoma.
+    При этом страницы рендерятся на полноценном Chromium. Девиз проекта: <i>«внешне — вчера, внутри — сегодня»</i>.</p>
+
+    <h2>Возможности</h2>
+
+    <h3>Олдскульный интерфейс</h3>
+    <ul>
+      <li>Интерфейс в стиле Internet Explorer 5/6: серая панель инструментов, рельефные кнопки, статус-бар «Готово».</li>
+      <li>Системный Look-and-Feel Windows, шрифт Tahoma 11.</li>
+      <li>Текстовые кнопки панели: «Назад», «Вперёд», «Обновить», «Домой», «Настройки», «Перейти», «Добавить», «Избранное».</li>
+    </ul>
+
+    <h3>Современный движок</h3>
+    <ul><li>Поддержка HTML5, CSS3 и ES6 благодаря встроенному Chromium. Масштабирование страниц.</li></ul>
+
+    <h3>Навигация, история, закладки</h3>
+    <ul>
+      <li>Кнопки «Назад / Вперёд / Обновить / Домой».</li>
+      <li>История посещений, сохраняемая между сессиями.</li>
+      <li>Восстановление последней сессии при запуске.</li>
+      <li>Закладки («Избранное») с импортом и экспортом.</li>
+    </ul>
+
+    <h3>Загрузки и настройки</h3>
+    <ul>
+      <li>Загрузка файлов и сохранение страниц в HTML.</li>
+      <li>Настройки: домашняя страница, поиск, тема, шрифт, папка загрузок, прокси, кэш, JavaScript.</li>
+    </ul>
+
+    <h2>Технические детали</h2>
+
+    <h3>Стек технологий</h3>
+    <table>
+      <tr><th>Технология</th><th>Назначение</th></tr>
+      <tr><td>Java 17+</td><td>Язык программирования</td></tr>
+      <tr><td>Swing</td><td>Окно и элементы интерфейса</td></tr>
+      <tr><td>JavaFX WebView</td><td>Рендеринг веб-страниц (Chromium)</td></tr>
+      <tr><td>Maven + Shade</td><td>Сборка fat-JAR</td></tr>
+      <tr><td>jpackage</td><td>Сборка переносимого EXE</td></tr>
+    </table>
+
+    <h3>Структура проекта</h3>
+    <pre>
+javicon-browser
+├── pom.xml
+├── run.bat / run.sh
+└── src/main/java/com/javicon/browser/
+    ├── Main.java
+    ├── BrowserWindow.java
+    ├── SettingsWindow.java
+    ├── SettingsManager.java
+    ├── HistoryManager.java
+    └── BookmarkManager.java
+    </pre>
+
+    <h3>Данные браузера</h3>
+    <table>
+      <tr><th>Файл</th><th>Назначение</th></tr>
+      <tr><td>~/.javicon/settings.properties</td><td>Настройки</td></tr>
+      <tr><td>~/.javicon/history.txt</td><td>История посещений</td></tr>
+      <tr><td>~/.javicon/bookmarks.txt</td><td>Закладки</td></tr>
+    </table>
+
+    <h2>Установка</h2>
+    <h3>Способ 1 — JAR (все платформы)</h3>
+    <ol>
+      <li>Установите JDK 17.</li>
+      <li>Скачайте jar с <a href="download.html">сайта</a> или <a href="https://github.com/Doinwor/javicon-browser/releases" target="_blank">GitHub Releases</a>.</li>
+      <li>Запустите: <code>java -jar JaviconBrowser-1.0.0.jar</code></li>
+    </ol>
+    <h3>Способ 2 — EXE (Windows)</h3>
+    <ol>
+      <li>Скачайте zip-архив.</li>
+      <li>Распакуйте и запустите <code>JaviconBrowser.exe</code>. Java уже внутри.</li>
+    </ol>
+    <h3>Способ 3 — Из исходников</h3>
+    <pre><code>git clone https://github.com/Doinwor/javicon-browser.git
+cd javicon-browser
+mvn clean package
+java -jar target/javicon-browser.jar</code></pre>
+
+    <h2>История версий</h2>
+    <table>
+      <tr><th>Версия</th><th>Дата</th><th>Примечания</th></tr>
+      <tr><td>1.0.0</td><td>04.08.2026</td><td>Первый публичный релиз</td></tr>
+    </table>
+    <p>Скачать: <a href="https://github.com/Doinwor/javicon-browser/releases" target="_blank">GitHub Releases</a></p>
+
+    <h2>Лицензия</h2>
+    <p>Javicon Browser распространяется под лицензией <b>MIT</b>. Исходный код открыт.</p>
+
+    <h2>Ссылки</h2>
+    <ul>
+      <li><a href="index.html">Официальный сайт</a></li>
+      <li><a href="download.html">Скачать</a></li>
+      <li><a href="https://github.com/Doinwor/javicon-browser" target="_blank">GitHub — репозиторий</a></li>
+      <li><a href="https://github.com/Doinwor/javicon-browser/releases" target="_blank">GitHub — релизы</a></li>
+      <li><a href="https://github.com/Doinwor/javicon-browser/wiki" target="_blank">GitHub Wiki</a></li>
+    </ul>
+
+  </div>
+
+  <div id="footer">
+    <center>
+      <blink>&#9733;</blink> &nbsp; Javicon Browser - 1998-2026 &nbsp; <blink>&#9733;</blink>
+      <br>
+      &copy; 2026 Javicon Project. Все права защищены. Лицензия MIT.
+    </center>
+  </div>
+
+</div>
+
+</body>
+</html>
