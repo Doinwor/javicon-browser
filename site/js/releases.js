@@ -4,9 +4,7 @@
  * Работает в публичном браузере без токенов (GitHub API включает CORS).
  */
 document.addEventListener("DOMContentLoaded", function () {
-  var table = document.getElementById("releases-table");
   var notice = document.getElementById("releases-status");
-  if (!table) return;
 
   fetch("https://api.github.com/repos/Doinwor/javicon-browser/releases", {
     headers: { "Accept": "application/vnd.github+json" }
