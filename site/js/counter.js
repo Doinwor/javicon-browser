@@ -9,18 +9,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
   startDots(el);
 
-  fetch("https://api.counterapi.dev/v1/javicon/javicon-browser-visits/up", {
-    method: "GET"
-  })
-    .then(function (res) { return res.ok ? res.json() : null; })
-    .then(function (data) {
-      if (data && typeof data.count !== "undefined") {
-        el.textContent = pad(data.count, 6);
-      }
+  var attempts = 0;
+  function load() {
+    var controller = new AbortController();
+    var timeout = setTimeout(function () { controller.abort(); }, 8000);
+    fetch("https://api.counterapi.dev/v1/javicon/javicon-browser-visits/up", {
+      method: "GET",
+      signal: controller.signal
     })
-    .catch(function () {
-      /* Оставляем точечки, если счётчик недоступен */
-    });
+      .then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (data) {
+        clearTimeout(timeout);
+        if (data && typeof data.count !== "undefined") {
+          el.textContent = pad(data.count, 6);
+        } else if (attempts < 2) {
+          attempts++;
+          setTimeout(load, 1500);
+        } else {
+          el.innerHTML = "<span class=\"dots\" id=\"counter-dots\">&middot;&middot;</span>";
+        }
+      })
+      .catch(function () {
+        clearTimeout(timeout);
+        if (attempts < 2) {
+          attempts++;
+          setTimeout(load, 1500);
+        } else {
+          el.innerHTML = "<span class=\"dots\" id=\"counter-dots\">&middot;&middot;</span>";
+        }
+      });
+  }
+  load();
 });
 
 /* Анимированные "загружающиеся" точечки-заполнитель. */
@@ -31,7 +50,7 @@ function startDots(el) {
     if (!document.getElementById("counter-dots")) { clearInterval(timer); return; }
     el.innerHTML = "<span class=\"dots\" id=\"counter-dots\">" + frames[i] + "</span>";
     i = (i + 1) % frames.length;
-  }, 400);
+  }, 350);
 }
 
 function pad(n, len) {
