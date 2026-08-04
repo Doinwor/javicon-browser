@@ -6,7 +6,7 @@
 
     <groupId>com.javicon</groupId>
     <artifactId>javicon-browser</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
 
     <name>Javicon Browser</name>

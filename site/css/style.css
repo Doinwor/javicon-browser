@@ -208,3 +208,104 @@ hr.silver {
 #latest-release {
   margin-top: 12px;
 }
+
+/* Энциклопедический стиль вики */
+#wiki {
+  text-align: left;
+}
+
+.toc {
+  border: 2px groove #808080;
+  background-color: #f2f2f2;
+  padding: 8px 12px;
+  margin-bottom: 14px;
+  display: inline-block;
+}
+
+.toc-title {
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.toc ol {
+  margin: 0;
+  padding-left: 22px;
+}
+
+.toc a {
+  color: #0000ee;
+  text-decoration: none;
+}
+
+.toc a:hover {
+  text-decoration: underline;
+}
+
+/* Карточка проекта (инфобокс) */
+.infobox {
+  float: right;
+  width: 280px;
+  border: 2px groove #808080;
+  background-color: #f2f2f2;
+  margin: 0 0 12px 14px;
+  font-size: 12px;
+}
+
+.infobox .ib-title {
+  text-align: center;
+  font-weight: bold;
+  background-color: #dcdcdc;
+  border-bottom: 1px solid #808080;
+  padding: 4px;
+}
+
+.infobox .ib-img {
+  text-align: center;
+  padding: 6px;
+  border-bottom: 1px solid #808080;
+}
+
+.infobox table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.infobox td {
+  border: none;
+  border-bottom: 1px dotted #c0c0c0;
+  padding: 3px 6px;
+  font-size: 12px;
+}
+
+.infobox td.ib-label {
+  font-weight: bold;
+  width: 35%;
+}
+
+/* Оглавление разделов */
+.wiki-section {
+  margin-top: 6px;
+}
+
+.wiki-section h3 {
+  background-color: #e6e6e6;
+  border: 1px solid #808080;
+  padding: 2px 6px;
+}
+
+/* Убрать флоат после инфобокса */
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+pre {
+  background-color: #f2f2f2;
+  border: 1px solid #808080;
+  padding: 6px;
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  overflow-x: auto;
+}

@@ -122,12 +122,18 @@ public class BrowserWindow extends JFrame {
     }
 
     private void restoreHistory() {
+        if (!settingsManager.isRestoreSession()) {
+            return;
+        }
         HistoryManager.HistoryData data = historyManager.loadHistory();
         history.addAll(data.urls());
         historyIndex = data.index();
     }
 
     private void saveSession() {
+        if (!settingsManager.isRestoreSession()) {
+            return;
+        }
         historyManager.saveHistory(new ArrayList<>(history), historyIndex);
     }
 

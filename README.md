@@ -4,7 +4,7 @@
 
 [![Java](https://img.shields.io/badge/Java-17%2B-orange.svg)](https://www.oracle.com/java/technologies/downloads/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-1.0.0-brightgreen.svg)](https://github.com/Doinwor/javicon-browser/releases)
+[![Version](https://img.shields.io/badge/Version-1.0.1-brightgreen.svg)](https://github.com/Doinwor/javicon-browser/releases)
 
 ---
 
@@ -78,7 +78,7 @@ mvn clean package        # собрать fat JAR в target/
 Сборка переносимого EXE для Windows:
 
 ```bash
-jpackage --type app-image --name "JaviconBrowser" --app-version "1.0.0" \
+jpackage --type app-image --name "JaviconBrowser" --app-version "1.0.1" \
   --vendor "Javicon Project" --icon app.ico \
   --input target --main-jar javicon-browser.jar \
   --main-class com.javicon.browser.Main --dest dist

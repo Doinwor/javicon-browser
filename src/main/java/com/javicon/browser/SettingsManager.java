@@ -76,7 +76,7 @@ public class SettingsManager {
     }
 
     public boolean isRestoreSession() {
-        return getBoolean("restoreSession", true);
+        return getBoolean("restoreSession", false);
     }
 
     public void setRestoreSession(boolean value) {
