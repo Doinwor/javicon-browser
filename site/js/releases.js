@@ -55,10 +55,12 @@ function renderMain(releases) {
   releases.forEach(function (rel, idx) {
     var name = rel.name || rel.tag_name;
     var tag = rel.tag_name;
+    var date = fmtDate(rel.published_at);
     var badge = idx === 0 ? "<span class=\"version-badge\">&#9733;</span> " : "";
     var assets = rel.assets || [];
     if (!assets.length) {
       rows += "<tr><td>" + badge + esc(name) + "</td>"
+        + "<td>" + date + "</td>"
         + "<td colspan=\"3\">Нет файлов для загрузки</td></tr>";
       return;
     }
@@ -70,6 +72,7 @@ function renderMain(releases) {
       var size = readable(asset.size);
       rows += "<tr>"
         + "<td>" + badge + "<b>" + esc(tag) + "</b></td>"
+        + "<td>" + date + "</td>"
         + "<td>" + esc(asset.name) + "</td>"
         + "<td>" + size + "</td>"
         + "<td>" + platform + "</td>"
@@ -78,6 +81,16 @@ function renderMain(releases) {
     });
   });
   tbody.innerHTML = rows;
+}
+
+/* Дата релиза в формате ДД.ММ.ГГГГ */
+function fmtDate(iso) {
+  if (!iso) return "";
+  var d = new Date(iso);
+  if (isNaN(d.getTime())) return "";
+  var dd = ("0" + d.getDate()).slice(-2);
+  var mm = ("0" + (d.getMonth() + 1)).slice(-2);
+  return dd + "." + mm + "." + d.getFullYear();
 }
 
 function readable(n) {
