@@ -22,3 +22,6 @@ settings.properties
 dist/
 *.zip
 app.ico
+
+# Рабочая копия GitHub Wiki (отдельный git-репозиторий)
+.wiki/
