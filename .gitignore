@@ -1,0 +1,24 @@
+# Java / Maven
+target/
+*.class
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Локальные настройки браузера
+settings.properties
+
+# Сборка EXE (jpackage) и релизные архивы
+dist/
+*.zip
+app.ico
