@@ -8,16 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.web.WebView;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -27,7 +22,6 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
-import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import java.awt.BorderLayout;
@@ -36,8 +30,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -63,6 +55,7 @@ public class BrowserWindow extends JFrame {
     private JButton settingsBtn;
     private JButton bookmarkBtn;
     private JButton bookmarksBtn;
+    private JButton historyBtn;
 
     private JLabel statusLabel;
     private JProgressBar progressBar;
@@ -122,7 +115,7 @@ public class BrowserWindow extends JFrame {
     }
 
     private void restoreHistory() {
-        if (!settingsManager.isRestoreSession()) {
+        if (!settingsManager.isSaveHistory() || !settingsManager.isSaveHistoryBetweenSessions()) {
             return;
         }
         HistoryManager.HistoryData data = historyManager.loadHistory();
@@ -131,7 +124,7 @@ public class BrowserWindow extends JFrame {
     }
 
     private void saveSession() {
-        if (!settingsManager.isRestoreSession()) {
+        if (!settingsManager.isSaveHistory() || !settingsManager.isSaveHistoryBetweenSessions()) {
             return;
         }
         historyManager.saveHistory(new ArrayList<>(history), historyIndex);
@@ -155,7 +148,8 @@ public class BrowserWindow extends JFrame {
             wireLoadWorker();
             Scene scene = new Scene(webView);
             browserPanel.setScene(scene);
-            if (!history.isEmpty() && historyIndex >= 0) {
+            if (settingsManager.isRestoreSession()
+                    && !history.isEmpty() && historyIndex >= 0) {
                 webView.getEngine().load(history.get(historyIndex));
             } else {
                 webView.getEngine().load(settingsManager.getHomePage());
@@ -244,7 +238,11 @@ public class BrowserWindow extends JFrame {
 
         bookmarksBtn = styleButton(new JButton("Избранное"));
         bookmarksBtn.setToolTipText("Управление закладками");
-        bookmarksBtn.addActionListener(e -> openBookmarksDialog());
+        bookmarksBtn.addActionListener(e -> openFavoritesWindow());
+
+        historyBtn = styleButton(new JButton("История"));
+        historyBtn.setToolTipText("История посещений");
+        historyBtn.addActionListener(e -> openFavoritesWindow());
 
         navPanel.add(backBtn, BorderLayout.WEST);
         navPanel.add(forwardBtn, BorderLayout.CENTER);
@@ -252,11 +250,13 @@ public class BrowserWindow extends JFrame {
 
         JPanel actionsPanel = new JPanel(new BorderLayout());
         actionsPanel.setBackground(Color.LIGHT_GRAY);
-        actionsPanel.add(bookmarkBtn, BorderLayout.WEST);
-        actionsPanel.add(bookmarksBtn, BorderLayout.CENTER);
-        actionsPanel.add(homeBtn, BorderLayout.EAST);
-
-        addressBar = new JTextField(settingsManager.getHomePage());
+        JPanel favoritePanel = new JPanel(new BorderLayout());
+        favoritePanel.setBackground(Color.LIGHT_GRAY);
+        favoritePanel.add(bookmarkBtn, BorderLayout.WEST);
+        favoritePanel.add(bookmarksBtn, BorderLayout.CENTER);
+        favoritePanel.add(historyBtn, BorderLayout.EAST);
+        actionsPanel.add(favoritePanel, BorderLayout.WEST);
+        actionsPanel.add(homeBtn, BorderLayout.EAST);        addressBar = new JTextField(settingsManager.getHomePage());
         addressBar.setFont(UI_FONT);
         addressBar.setPreferredSize(new Dimension(0, 28));
         addressBar.addActionListener(e -> loadUrl());
@@ -275,7 +275,6 @@ public class BrowserWindow extends JFrame {
         goWrap.add(settingsBtn, BorderLayout.EAST);
         rightPanel.add(goWrap, BorderLayout.WEST);
         rightPanel.add(actionsPanel, BorderLayout.EAST);
-
         topPanel.add(rightPanel, BorderLayout.EAST);
 
         add(topPanel, BorderLayout.NORTH);
@@ -384,59 +383,17 @@ public class BrowserWindow extends JFrame {
         JOptionPane.showMessageDialog(this, "Закладка добавлена: " + currentTitle);
     }
 
-    private void openBookmarksDialog() {
-        JDialog dialog = new JDialog(this, "Закладки", true);
-        dialog.setSize(420, 320);
-        dialog.setLocationRelativeTo(this);
-
-        DefaultListModel<BookmarkManager.Bookmark> model = new DefaultListModel<>();
-        for (BookmarkManager.Bookmark b : bookmarkManager.getBookmarks()) {
-            model.addElement(b);
-        }
-
-        JList<BookmarkManager.Bookmark> list = new JList<>(model);
-        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        list.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) {
-                    openSelectedBookmark(list, dialog);
-                }
-            }
-        });
-
-        JButton openBtn = new JButton("Открыть");
-        openBtn.addActionListener(e -> openSelectedBookmark(list, dialog));
-
-        JButton deleteBtn = new JButton("Удалить");
-        deleteBtn.addActionListener(e -> {
-            int idx = list.getSelectedIndex();
-            if (idx >= 0) {
-                bookmarkManager.removeBookmark(idx);
-                model.remove(idx);
-            }
-        });
-
-        JButton closeBtn = new JButton("Закрыть");
-        closeBtn.addActionListener(e -> dialog.dispose());
-
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(openBtn);
-        buttonPanel.add(deleteBtn);
-        buttonPanel.add(closeBtn);
-
-        dialog.setLayout(new BorderLayout());
-        dialog.add(new JScrollPane(list), BorderLayout.CENTER);
-        dialog.add(buttonPanel, BorderLayout.SOUTH);
-        dialog.setVisible(true);
+    private void openFavoritesWindow() {
+        FavoritesWindow window = new FavoritesWindow(this, bookmarkManager, historyManager);
+        window.setVisible(true);
     }
 
-    private void openSelectedBookmark(JList<BookmarkManager.Bookmark> list, JDialog dialog) {
-        BookmarkManager.Bookmark b = list.getSelectedValue();
-        if (b != null) {
-            navigate(b.url());
-            dialog.dispose();
-        }
+    public List<String> getHistoryUrls() {
+        return new ArrayList<>(history);
+    }
+
+    public void navigateTo(String url) {
+        navigate(url);
     }
 
     private void navigate(String url) {
@@ -577,7 +534,7 @@ public class BrowserWindow extends JFrame {
         }
 
         JLabel text = new JLabel("<html><div style='text-align:center;font-family:Tahoma;font-size:12px;'>"
-                + "<b>Javicon Browser 1.0.0</b><br><br>"
+                + "<b>Javicon Browser 2.0.0</b><br><br>"
                 + "Лёгкий ретро-браузер на Java.<br>"
                 + "Движок: JavaFX WebView (Chromium)<br>"
                 + "Java 17+, Maven, Swing + JavaFX.</div></html>");
@@ -688,16 +645,19 @@ public class BrowserWindow extends JFrame {
         JMenuItem addBookmarkItem = new JMenuItem("Добавить в избранное");
         addBookmarkItem.addActionListener(e -> addBookmark());
         JMenuItem manageBookmarksItem = new JMenuItem("Управление избранным...");
-        manageBookmarksItem.addActionListener(e -> openBookmarksDialog());
+        manageBookmarksItem.addActionListener(e -> openFavoritesWindow());
         bookmarksMenu.add(addBookmarkItem);
         bookmarksMenu.add(manageBookmarksItem);
 
         JMenu toolsMenu = new JMenu("Инструменты");
         JMenuItem settingsItem = new JMenuItem("Настройки...");
         settingsItem.addActionListener(e -> openSettings());
+        JMenuItem historyItem = new JMenuItem("История...");
+        historyItem.addActionListener(e -> openFavoritesWindow());
         JMenuItem clearHistoryItem = new JMenuItem("Очистить историю");
         clearHistoryItem.addActionListener(e -> clearHistory());
         toolsMenu.add(settingsItem);
+        toolsMenu.add(historyItem);
         toolsMenu.add(clearHistoryItem);
 
         JMenu helpMenu = new JMenu("Справка");
