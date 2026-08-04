@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", function () {
   var el = document.getElementById("visitor-counter");
   if (!el) return;
 
+  startDots(el);
+
   fetch("https://api.counterapi.dev/v1/javicon/javicon-browser-visits/up", {
     method: "GET"
   })
@@ -17,9 +19,20 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     })
     .catch(function () {
-      /* Оставляем статичное число, если счётчик недоступен */
+      /* Оставляем точечки, если счётчик недоступен */
     });
 });
+
+/* Анимированные "загружающиеся" точечки-заполнитель. */
+function startDots(el) {
+  var frames = ["·", "··", "···", "····", "·····", "······"];
+  var i = 0;
+  var timer = setInterval(function () {
+    if (!document.getElementById("counter-dots")) { clearInterval(timer); return; }
+    el.innerHTML = "<span class=\"dots\" id=\"counter-dots\">" + frames[i] + "</span>";
+    i = (i + 1) % frames.length;
+  }, 400);
+}
 
 function pad(n, len) {
   var s = String(n);

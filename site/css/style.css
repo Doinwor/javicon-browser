@@ -168,6 +168,20 @@ blink {
   color: #00ff00;
   padding: 2px 6px;
   border: 2px inset #808080;
+  min-width: 64px;
+  text-align: center;
+}
+
+/* Анимированные точечки-заполнитель пока счётчик грузится */
+.dots {
+  animation: dots-blink 1s steps(1) infinite;
+  color: #00ff00;
+}
+
+@keyframes dots-blink {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.3; }
+  100% { opacity: 1; }
 }
 
 hr.silver {
