@@ -96,12 +96,12 @@ function esc(s) {
 
 /* Актуальная версия на главной странице. */
 function renderIndex(rel) {
-  var row = document.getElementById("latest-version-row");
-  if (!row) return;
+  var name = document.getElementById("latest-version-name");
+  var platform = document.getElementById("latest-version-platform");
+  var req = document.getElementById("latest-version-req");
+  if (!name) return;
   var text = rel.name || rel.tag_name;
-  var platform = "Windows / Linux / macOS";
-  var req = "Java JDK 17+";
-  row.innerHTML = "<td>" + esc(text) + "</td>"
-    + "<td>" + platform + "</td>"
-    + "<td>" + req + "</td>";
+  if (name) name.textContent = text;
+  if (platform) platform.textContent = "Windows / Linux / macOS";
+  if (req) req.textContent = "Java JDK 17+";
 }
