@@ -140,6 +140,8 @@ javicon-browser
 
 ## 🌐 Сайт проекта
 
-Официальный сайт: [github.com/Doinwor/javicon-browser](https://github.com/Doinwor/javicon-browser) — исходный код, релизы и документация.
+Официальный сайт: **[doinwor.github.io/javicon-browser](https://doinwor.github.io/javicon-browser/)** —
+загрузить последнюю версию, архив всех релизов, возможности и скриншоты.
+Код проекта и релизы: [github.com/Doinwor/javicon-browser](https://github.com/Doinwor/javicon-browser).
 
 Made with ❤️ и ретро-ностальгией. 1998-2026.
